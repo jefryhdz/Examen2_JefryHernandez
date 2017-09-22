@@ -1,5 +1,12 @@
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import jdk.nashorn.internal.scripts.JO;
@@ -20,6 +27,9 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        cargar();
+        cargaralbum();
     }
 
     /**
@@ -70,6 +80,10 @@ public class Main extends javax.swing.JFrame {
         jt_nombrealbum = new javax.swing.JTextField();
         jt_artistaalbum = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        Listaralbum = new javax.swing.JDialog();
+        cb_listar = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jt_lista = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -398,6 +412,60 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        cb_listar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cb_listarItemStateChanged(evt);
+            }
+        });
+
+        jt_lista.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Nombre", "Artista", "Duracion", "Genero"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Long.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane2.setViewportView(jt_lista);
+
+        javax.swing.GroupLayout ListaralbumLayout = new javax.swing.GroupLayout(Listaralbum.getContentPane());
+        Listaralbum.getContentPane().setLayout(ListaralbumLayout);
+        ListaralbumLayout.setHorizontalGroup(
+            ListaralbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ListaralbumLayout.createSequentialGroup()
+                .addGap(137, 137, 137)
+                .addComponent(cb_listar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ListaralbumLayout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        ListaralbumLayout.setVerticalGroup(
+            ListaralbumLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ListaralbumLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cb_listar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jMenu1.setText("Menu");
@@ -449,6 +517,11 @@ public class Main extends javax.swing.JFrame {
         jMenu3.add(jMenuItem11);
 
         jMenuItem13.setText("Listar Album");
+        jMenuItem13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem13ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem13);
 
         jMenuItem12.setText("Eliminar Album");
@@ -623,6 +696,34 @@ public class Main extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void cb_listarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cb_listarItemStateChanged
+        if (evt.getStateChange() == 1) {
+            Album b = (Album) cb_listar.getSelectedItem();
+            DefaultTableModel model = (DefaultTableModel) jt_lista.getModel();
+            int ros = model.getRowCount();
+            for (int i = 0; i < ros; i++) {
+                model.removeRow(0);
+            }
+            jt_lista.setModel(model);
+            for (Cancion lista : b.getListas()) {
+                Cancion[] c = {lista};
+                model.addRow(c);
+            }
+            jt_lista.setModel(model);
+        }
+
+    }//GEN-LAST:event_cb_listarItemStateChanged
+
+    private void jMenuItem13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem13ActionPerformed
+        cb_listar.setModel(new DefaultComboBoxModel(listalbums.toArray()));
+        Listaralbum.setModal(true);
+        Listaralbum.pack();
+        Listaralbum.setLocationRelativeTo(this);
+        Listaralbum.setVisible(true);
+
+
+    }//GEN-LAST:event_jMenuItem13ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -659,8 +760,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog Listaralbum;
     private javax.swing.JDialog cancion;
     private javax.swing.JComboBox<String> cb_genero;
+    private javax.swing.JComboBox<String> cb_listar;
     private javax.swing.JDialog crearalbum;
     private javax.swing.JDialog crearcancion;
     private javax.swing.JButton jButton1;
@@ -702,6 +805,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog jd_crear;
     private javax.swing.JDialog jd_ingresar;
     private javax.swing.JLabel jl_artista;
@@ -709,6 +813,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField jt_artistaalbum;
     private javax.swing.JTextField jt_cancion;
     private javax.swing.JTextField jt_ingresar;
+    private javax.swing.JTable jt_lista;
     private javax.swing.JTextField jt_nombre;
     private javax.swing.JTextField jt_nombrealbum;
     private javax.swing.JTextField jt_user;
@@ -721,4 +826,86 @@ public class Main extends javax.swing.JFrame {
     ArrayList<Album> listalbums = new ArrayList();
     Usuario login;
     Album albus;
+
+    public void cargar() {
+        File f = new File("./usuarios.fac");
+        Usuario us = null;
+        try {
+            if (f.exists()) {
+                FileInputStream entrada = new FileInputStream(f);
+                ObjectInputStream objeto = new ObjectInputStream(entrada);
+
+                try {
+                    while ((us = (Usuario) objeto.readObject()) != null) {
+                        listausuarios.add(us);
+
+                    }
+                } catch (Exception e) {
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void cargaralbum() {
+        File f = new File("./albumes.fac");
+        Album al = null;
+        try {
+            if (f.exists()) {
+                FileInputStream entrada = new FileInputStream(f);
+                ObjectInputStream objeto = new ObjectInputStream(entrada);
+
+                try {
+                    while ((al = (Album) objeto.readObject()) != null) {
+                        listalbums.add(al);
+
+                    }
+                } catch (Exception e) {
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    public void agregar() {
+        File f = new File("./albumes.fac");
+        FileOutputStream fw = null;
+        ObjectOutputStream bw = null;
+        try {
+            fw = new FileOutputStream(f);
+            bw = new ObjectOutputStream(fw);
+            try {
+                for (Album li : listalbums) {
+                    bw.writeObject(li);
+                }
+                bw.flush();
+                try {
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            } catch (Exception e) {
+            }
+        } catch (Exception e) {
+
+        }
+        f = new File("./usuarios.fac");
+        try {
+            fw = new FileOutputStream(f);
+            bw = new ObjectOutputStream(fw);
+            try {
+                for (Usuario li : listausuarios) {
+                    bw.writeObject(li);
+                }
+                bw.flush();
+                try {
+                    bw.close();
+                    fw.close();
+                } catch (Exception e) {
+                }
+            } catch (Exception e) {
+            }
+        } catch (Exception e) {
+        }
+    }
 }
