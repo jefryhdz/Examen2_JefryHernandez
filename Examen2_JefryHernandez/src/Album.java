@@ -6,17 +6,27 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Jefry Hernandez
  */
 public class Album {
-    private String nombre;
-    private ArrayList<Cancion> listas= new ArrayList();
 
-    public Album(String nombre) {
+    private String nombre;
+    private ArrayList<Cancion> listas = new ArrayList();
+    private String artista;
+
+    public Album(String nombre, String artista) {
         this.nombre = nombre;
+        this.artista = artista;
+    }
+
+    public String getArtista() {
+        return artista;
+    }
+
+    public void setArtista(String artista) {
+        this.artista = artista;
     }
 
     public String getNombre() {
@@ -39,6 +49,5 @@ public class Album {
     public String toString() {
         return nombre;
     }
-    
-    
+
 }
