@@ -1,4 +1,5 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Jefry Hernandez
  */
-public class Usuario {
+public class Usuario implements Serializable{
 
     private String nombre;
     private int edad;
@@ -19,6 +20,8 @@ public class Usuario {
     private String password;
     private ArrayList<Playlist> listas = new ArrayList();
     private ArrayList <Cancion> favoritos= new ArrayList();
+    
+    private  final long SerialVersionUID = 771L;
 
     public Usuario(String nombre, int edad, String username, String password) {
         this.nombre = nombre;
@@ -73,6 +76,11 @@ public class Usuario {
 
     public void setFavoritos(ArrayList<Cancion> favoritos) {
         this.favoritos = favoritos;
+    }
+
+    @Override
+    public String toString() {
+        return  nombre;
     }
     
 }

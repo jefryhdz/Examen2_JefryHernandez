@@ -1,4 +1,5 @@
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /*
@@ -10,11 +11,13 @@ import java.util.ArrayList;
  *
  * @author Jefry Hernandez
  */
-public class Album {
+public class Album implements Serializable {
 
     private String nombre;
     private ArrayList<Cancion> listas = new ArrayList();
     private String artista;
+
+    private final long SerialVersionUID = 771L;
 
     public Album(String nombre, String artista) {
         this.nombre = nombre;
