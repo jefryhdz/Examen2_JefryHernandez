@@ -108,6 +108,8 @@ public class Main extends javax.swing.JFrame {
         plays = new javax.swing.JDialog();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
+        jd_rep = new javax.swing.JDialog();
+        jl_tiempo = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -547,6 +549,11 @@ public class Main extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jt_favo);
 
         jButton11.setText("Reproducir");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout FavoritosLayout = new javax.swing.GroupLayout(Favoritos.getContentPane());
         Favoritos.getContentPane().setLayout(FavoritosLayout);
@@ -672,6 +679,23 @@ public class Main extends javax.swing.JFrame {
             .addGroup(playsLayout.createSequentialGroup()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 80, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jd_repLayout = new javax.swing.GroupLayout(jd_rep.getContentPane());
+        jd_rep.getContentPane().setLayout(jd_repLayout);
+        jd_repLayout.setHorizontalGroup(
+            jd_repLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jd_repLayout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(jl_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
+        );
+        jd_repLayout.setVerticalGroup(
+            jd_repLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_repLayout.createSequentialGroup()
+                .addContainerGap(59, Short.MAX_VALUE)
+                .addComponent(jl_tiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1100,9 +1124,15 @@ public class Main extends javax.swing.JFrame {
 
     private void jt_favoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jt_favoMouseClicked
         if (jt_favo.getSelectedRow() > -1) {
-            ca = (Cancion) jt_lista.getValueAt(jt_favo.getSelectedRow(), 0);            
+            ca = (Cancion) jt_lista.getValueAt(jt_favo.getSelectedRow(), 0);
         }
     }//GEN-LAST:event_jt_favoMouseClicked
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+        hilo h = new hilo(jl_tiempo, ca, jd_rep);
+        h.start();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1203,7 +1233,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTree jTree1;
     private javax.swing.JDialog jd_crear;
     private javax.swing.JDialog jd_ingresar;
+    private javax.swing.JDialog jd_rep;
     private javax.swing.JLabel jl_artista;
+    private javax.swing.JLabel jl_tiempo;
     private javax.swing.JTable jt_album;
     private javax.swing.JTextField jt_artistaalbum;
     private javax.swing.JTextField jt_cancion;
